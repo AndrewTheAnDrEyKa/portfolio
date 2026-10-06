@@ -8,7 +8,11 @@ const app = await readFile('app.js','utf8');
 paths.push(...Array.from(css.matchAll(/url\(['"](\.\/[^'"]+)['"]\)/g),match=>match[1]));
 paths.push(...Array.from(app.matchAll(/(?:src|poster):\s*['"](\.\/[^'"]+)['"]/g),match=>match[1]));
 paths.push(...Array.from(html.matchAll(/(?:src|href)="(\.\/[^"#]+)"/g), match => match[1]));
-for (const file of new Set(paths)) await access(file.split('?')[0]);
+for (const file of new Set(paths)) {
+  // Licensed Apple fonts are optional local fallbacks, excluded from Git and dist.
+  if (/^\.\/fonts\/SF-Pro-Display-(?:Regular|Medium)\.otf$/.test(file)) continue;
+  await access(file.split('?')[0]);
+}
 const ids = Array.from(html.matchAll(/\bid="([^"]+)"/g), match => match[1]);
 if (new Set(ids).size !== ids.length) throw new Error('Duplicate HTML IDs');
 for (const match of html.matchAll(/href="#([^"]+)"/g)) {
