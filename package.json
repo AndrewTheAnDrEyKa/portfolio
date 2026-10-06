@@ -1,0 +1,13 @@
+{
+  "name": "andreyka-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/server.mjs",
+    "check": "node --check app.js && node --check glass.js && node scripts/check.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/server.mjs --dist"
+  },
+  "engines": { "node": ">=22" }
+}
