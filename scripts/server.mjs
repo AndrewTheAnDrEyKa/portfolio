@@ -10,7 +10,7 @@ http.createServer(async (request, response) => {
     const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
     const file = path.resolve(root, '.' + (pathname === '/' ? '/index.html' : pathname));
     const relative = path.relative(root, file);
-    if (relative.startsWith('..') || path.isAbsolute(relative) || !/^(index\.html|styles\.css|app\.js|content\.js|project-details\.js|glass\.js|fonts[/\\]SF-Pro-Display-(?:Regular|Medium)\.otf|assets[/\\](?:fonts[/\\])?[\w.-]+)$/.test(relative)) {
+    if (relative.startsWith('..') || path.isAbsolute(relative) || !/^(index\.html|styles\.css|app\.js|content\.js|project-details\.js|glass\.js|assets[/\\](?:fonts[/\\])?[\w.-]+)$/.test(relative)) {
       response.writeHead(404); response.end('Not found'); return;
     }
     const body = await readFile(file);
